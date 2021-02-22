@@ -9,7 +9,7 @@ from app import app
 from flask import render_template, request, redirect, url_for, flash
 from .forms import ContactForm
 from app import mail
-from flask_mail import Message
+from flask_mail import Message, Mail
 
 
 ###
@@ -30,27 +30,23 @@ def about():
 @app.route('/contact', methods=['GET','POST'])
 def contact():
     contactform= ContactForm()
-    if contactform.validate_on_submit():
-        #return "Great Success"
-        name = contactform.name.data
-        email = contactform.email.data
-        subject = contactform.subject.data
-        message = contactform.message.data
-        msg = Message("{subject}", sender=("{name}","{email}"),recipients=["98ede9e5fa-48eb45@inbox.mailtrap.io"])
-        msg.body = "{message}"
-        mail.send(msg)
-        flash("Your email was successfully Sent!")
-        return render_template('home.html')
-    else:
-         return render_template('contact.html', form=contactform)
-    '''
-    if request.method == "POST":
-        name = contactform.name.data
-        email = contactform.email.data
-        subject = contactform.subject.data
-        message = contactform.message.data
-    '''
-    #return render_template('contact.html', form=contactform)
+    if request.method == 'POST':
+        if contactform.validate_on_submit():
+            #return "Great Success"
+            name = contactform.name.data
+            email = contactform.email.data
+            subject = contactform.subject.data
+            message = contactform.message.data
+            msg = Message(subject, sender=(name,email),recipients=["98ede9e5fa-48eb45@inbox.mailtrap.io"])
+            msg.body = message
+            mail.send(msg)
+            flash(u'Your email was successfully Sent {name}!'.format(name=name),'success')
+            #return render_template('home.html')
+            return redirect(url_for('home'))
+        else:
+            flash_errors(contactform)
+    return render_template('contact.html', form=contactform)
+
 
 
 

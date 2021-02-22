@@ -9,16 +9,23 @@
         {{ form.csrf_token }}
         <div class="form-group">
             {{ form.name.label }}
+            <p> Please Enter your Full Name</p>
             {{ form.name(class="form-control") }}
         </div>
         <div class="form-group">
-            {{ form.email.label }} {{ form.email(class="form-control") }}
+            {{ form.email.label }} 
+            <p>Please Enter Your E-mail address</p> 
+            {{ form.email(class="form-control") }}
         </div>
         <div class="form-group">
-            {{ form.subject.label }} {{ form.subject(class="form-control") }}
+            {{ form.subject.label }} 
+            <p>Please Enter the subject of your message</p>
+            {{ form.subject(class="form-control") }}
         </div>
         <div class="form-group">
-            {{ form.message.label }} {{ form.message(class="form-control") }}
+            {{ form.message.label }}
+            <p>Please Enter the message you would like to send</p> 
+            {{ form.message(class="form-control") }}
         </div>
         <button type="submit" class="btn"> Send </button>
     </form>
